@@ -165,7 +165,7 @@
         }
         
         .start-button {
-            background: #c0c0c0;
+            background: linear-gradient(145deg, #e6e6e6, #c0c0c0);
             border: 1px solid;
             border-color: #dfdfdf #808080 #808080 #dfdfdf;
             padding: 2px 6px;
@@ -175,10 +175,185 @@
             display: flex;
             align-items: center;
             gap: 4px;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .start-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.6), transparent);
+            transition: left 0.5s ease;
+        }
+        
+        .start-button:hover::before {
+            left: 100%;
         }
         
         .start-button:active {
             border-color: #808080 #dfdfdf #dfdfdf #808080;
+            transform: scale(0.95);
+        }
+        
+        .start-button:hover {
+            background: linear-gradient(145deg, #f0f0f0, #d0d0d0);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        
+        .start-menu {
+            position: fixed;
+            bottom: 28px;
+            left: 4px;
+            width: 300px;
+            background: #c0c0c0;
+            border: 2px solid;
+            border-color: #dfdfdf #808080 #808080 #dfdfdf;
+            box-shadow: 2px 2px 10px rgba(0,0,0,0.3);
+            display: none;
+            z-index: 1000;
+            animation: startMenuSlide 0.3s ease-out;
+        }
+        
+        .start-menu.show {
+            display: block;
+        }
+        
+        @keyframes startMenuSlide {
+            from {
+                transform: translateY(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+        
+        .start-menu-header {
+            background: linear-gradient(90deg, #0000ff, #8080ff, #00ffff);
+            color: white;
+            padding: 8px 12px;
+            font-weight: bold;
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .start-menu-item {
+            padding: 8px 12px;
+            border-bottom: 1px solid #808080;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.2s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .start-menu-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0,0,255,0.1), transparent);
+            transition: left 0.3s ease;
+        }
+        
+        .start-menu-item:hover::before {
+            left: 100%;
+        }
+        
+        .start-menu-item:hover {
+            background: linear-gradient(90deg, #0000ff, #4040ff);
+            color: white;
+            transform: translateX(5px);
+        }
+        
+        .start-menu-separator {
+            height: 1px;
+            background: #808080;
+            margin: 2px 0;
+        }
+        
+        .start-menu-submenu {
+            position: absolute;
+            left: 100%;
+            top: 0;
+            width: 200px;
+            background: #c0c0c0;
+            border: 2px solid;
+            border-color: #dfdfdf #808080 #808080 #dfdfdf;
+            box-shadow: 2px 2px 5px rgba(0,0,0,0.3);
+            display: none;
+            z-index: 1001;
+        }
+        
+        .start-menu-item:hover .start-menu-submenu {
+            display: block;
+            animation: submenuSlide 0.2s ease-out;
+        }
+        
+        @keyframes submenuSlide {
+            from {
+                transform: translateX(-20px);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+        
+        .windows-logo {
+            width: 16px;
+            height: 16px;
+            background: linear-gradient(45deg, #ff0000, #00ff00, #0000ff, #ffff00);
+            border-radius: 2px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 8px;
+            font-weight: bold;
+            animation: logoSpin 4s linear infinite;
+        }
+        
+        @keyframes logoSpin {
+            0% { transform: rotate(0deg); filter: hue-rotate(0deg); }
+            100% { transform: rotate(360deg); filter: hue-rotate(360deg); }
+        }
+        
+        .start-menu-icon {
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+        }
+        
+        .power-options {
+            background: #ffffcc;
+            border: 1px solid #808080;
+            border-radius: 4px;
+            padding: 4px 8px;
+            margin: 4px;
+            text-align: center;
+            animation: powerGlow 2s ease-in-out infinite alternate;
+        }
+        
+        @keyframes powerGlow {
+            from { box-shadow: 0 0 5px rgba(255,255,0,0.5); }
+            to { box-shadow: 0 0 15px rgba(255,255,0,0.8); }
         }
         
         .clock {
@@ -752,16 +927,111 @@
     <!-- Taskbar -->
     <div class="taskbar">
         <div class="start-button" onclick="toggleStartMenu()">
-            <div style="width: 12px; height: 12px; background: #ff0000; border-radius: 2px; display: flex; align-items: center; justify-content: center; color: white; font-size: 8px; font-weight: bold;">⊞</div>
+            <div class="windows-logo">⊞</div>
             Start
         </div>
         <div class="flex-1 flex">
             <div class="button-95" style="margin-left: 8px; background: #dfdfdf;">
-                🖥️ My Portfolio
+                🖥️ TamVo02 Portfolio
             </div>
         </div>
         <div class="clock" id="clock">
             <span id="time">10:21 AM</span>
+        </div>
+    </div>
+    
+    <!-- Start Menu -->
+    <div class="start-menu" id="startMenu">
+        <div class="start-menu-header">
+            <div class="windows-logo">⊞</div>
+            <span>TamVo02 Developer OS</span>
+        </div>
+        
+        <div class="start-menu-item" onclick="executeCommand('programs')">
+            <div class="start-menu-icon">📁</div>
+            <span>Programs</span>
+            <div class="start-menu-submenu">
+                <div class="start-menu-item" onclick="executeCommand('vscode')">
+                    <div class="start-menu-icon">💻</div>
+                    <span>Visual Studio Code</span>
+                </div>
+                <div class="start-menu-item" onclick="executeCommand('browser')">
+                    <div class="start-menu-icon">🌐</div>
+                    <span>Web Browser</span>
+                </div>
+                <div class="start-menu-item" onclick="executeCommand('terminal')">
+                    <div class="start-menu-icon">⌨️</div>
+                    <span>Terminal</span>
+                </div>
+                <div class="start-menu-item" onclick="executeCommand('git')">
+                    <div class="start-menu-icon">🔧</div>
+                    <span>Git Bash</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="start-menu-item" onclick="executeCommand('documents')">
+            <div class="start-menu-icon">📄</div>
+            <span>Documents</span>
+            <div class="start-menu-submenu">
+                <div class="start-menu-item" onclick="executeCommand('resume')">
+                    <div class="start-menu-icon">📋</div>
+                    <span>Resume.pdf</span>
+                </div>
+                <div class="start-menu-item" onclick="executeCommand('portfolio')">
+                    <div class="start-menu-icon">🎨</div>
+                    <span>Portfolio.html</span>
+                </div>
+                <div class="start-menu-item" onclick="executeCommand('projects')">
+                    <div class="start-menu-icon">🚀</div>
+                    <span>Projects Folder</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="start-menu-item" onclick="executeCommand('settings')">
+            <div class="start-menu-icon">⚙️</div>
+            <span>Settings</span>
+            <div class="start-menu-submenu">
+                <div class="start-menu-item" onclick="executeCommand('theme')">
+                    <div class="start-menu-icon">🎨</div>
+                    <span>Change Theme</span>
+                </div>
+                <div class="start-menu-item" onclick="executeCommand('display')">
+                    <div class="start-menu-icon">🖥️</div>
+                    <span>Display Settings</span>
+                </div>
+                <div class="start-menu-item" onclick="executeCommand('sound')">
+                    <div class="start-menu-icon">🔊</div>
+                    <span>Sound Settings</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="start-menu-separator"></div>
+        
+        <div class="start-menu-item" onclick="executeCommand('search')">
+            <div class="start-menu-icon">🔍</div>
+            <span>Search</span>
+        </div>
+        
+        <div class="start-menu-item" onclick="executeCommand('help')">
+            <div class="start-menu-icon">❓</div>
+            <span>Help & Support</span>
+        </div>
+        
+        <div class="start-menu-item" onclick="executeCommand('run')">
+            <div class="start-menu-icon">🏃</div>
+            <span>Run...</span>
+        </div>
+        
+        <div class="start-menu-separator"></div>
+        
+        <div class="power-options">
+            <div class="start-menu-item" onclick="executeCommand('shutdown')" style="margin: 0; padding: 4px 8px;">
+                <div class="start-menu-icon">⚡</div>
+                <span>Shut Down</span>
+            </div>
         </div>
     </div>
     
@@ -800,10 +1070,339 @@
             document.getElementById('time').textContent = timeString;
         }
         
-        // Start menu toggle (placeholder)
+        // Start menu toggle with enhanced functionality
+        let startMenuOpen = false;
+        
         function toggleStartMenu() {
-            alert('Start menu functionality coming soon! 🚀');
+            const startMenu = document.getElementById('startMenu');
+            startMenuOpen = !startMenuOpen;
+            
+            if (startMenuOpen) {
+                startMenu.classList.add('show');
+                playStartSound();
+                addStartMenuGlow();
+            } else {
+                startMenu.classList.remove('show');
+            }
         }
+        
+        // Close start menu when clicking outside
+        document.addEventListener('click', function(e) {
+            const startMenu = document.getElementById('startMenu');
+            const startButton = document.querySelector('.start-button');
+            
+            if (!startMenu.contains(e.target) && !startButton.contains(e.target)) {
+                startMenu.classList.remove('show');
+                startMenuOpen = false;
+            }
+        });
+        
+        // Execute various commands from start menu
+        function executeCommand(command) {
+            const startMenu = document.getElementById('startMenu');
+            startMenu.classList.remove('show');
+            startMenuOpen = false;
+            
+            switch(command) {
+                case 'programs':
+                    showNotification('📁 Programs', 'Opening Programs folder...');
+                    break;
+                case 'vscode':
+                    showNotification('💻 VS Code', 'Launching Visual Studio Code...');
+                    setTimeout(() => {
+                        window.open('https://vscode.dev', '_blank');
+                    }, 1000);
+                    break;
+                case 'browser':
+                    showNotification('🌐 Browser', 'Opening web browser...');
+                    setTimeout(() => {
+                        window.open('https://www.google.com', '_blank');
+                    }, 1000);
+                    break;
+                case 'terminal':
+                    showNotification('⌨️ Terminal', 'Opening terminal interface...');
+                    showTerminalModal();
+                    break;
+                case 'git':
+                    showNotification('🔧 Git', 'Opening Git Bash...');
+                    setTimeout(() => {
+                        window.open('https://github.com/TamVo02', '_blank');
+                    }, 1000);
+                    break;
+                case 'documents':
+                    showNotification('📄 Documents', 'Opening Documents folder...');
+                    break;
+                case 'resume':
+                    showNotification('📋 Resume', 'Opening resume...');
+                    showTab('resume');
+                    break;
+                case 'portfolio':
+                    showNotification('🎨 Portfolio', 'You are already viewing the portfolio!');
+                    break;
+                case 'projects':
+                    showNotification('🚀 Projects', 'Opening projects...');
+                    showTab('projects');
+                    break;
+                case 'settings':
+                    showNotification('⚙️ Settings', 'Opening settings panel...');
+                    showSettingsModal();
+                    break;
+                case 'theme':
+                    showNotification('🎨 Theme', 'Changing theme...');
+                    changeTheme();
+                    break;
+                case 'display':
+                    showNotification('🖥️ Display', 'Adjusting display settings...');
+                    adjustDisplay();
+                    break;
+                case 'sound':
+                    showNotification('🔊 Sound', 'Playing system sounds...');
+                    playSystemSound();
+                    break;
+                case 'search':
+                    showNotification('🔍 Search', 'Opening search...');
+                    showSearchModal();
+                    break;
+                case 'help':
+                    showNotification('❓ Help', 'Opening help documentation...');
+                    showHelpModal();
+                    break;
+                case 'run':
+                    showNotification('🏃 Run', 'Opening run dialog...');
+                    showRunModal();
+                    break;
+                case 'shutdown':
+                    showNotification('⚡ Shutdown', 'Shutting down system...');
+                    performShutdown();
+                    break;
+                default:
+                    showNotification('ℹ️ Info', `Executing: ${command}`);
+            }
+        }
+        
+        // Play start sound (visual feedback)
+        function playStartSound() {
+            const soundEffect = document.createElement('div');
+            soundEffect.style.position = 'fixed';
+            soundEffect.style.top = '50%';
+            soundEffect.style.left = '50%';
+            soundEffect.style.transform = 'translate(-50%, -50%)';
+            soundEffect.style.fontSize = '48px';
+            soundEffect.style.color = '#00ff00';
+            soundEffect.style.textShadow = '0 0 20px #00ff00';
+            soundEffect.style.pointerEvents = 'none';
+            soundEffect.style.animation = 'soundWave 1s ease-out';
+            soundEffect.textContent = '🔊';
+            document.body.appendChild(soundEffect);
+            
+            setTimeout(() => {
+                document.body.removeChild(soundEffect);
+            }, 1000);
+        }
+        
+        // Add glow effect to start button
+        function addStartMenuGlow() {
+            const startButton = document.querySelector('.start-button');
+            startButton.style.boxShadow = '0 0 20px #00ff00, 0 0 30px #00ff00';
+            
+            setTimeout(() => {
+                startButton.style.boxShadow = '0 4px 8px rgba(0,0,0,0.2)';
+            }, 2000);
+        }
+        
+        // Show notification system
+        function showNotification(title, message) {
+            const notification = document.createElement('div');
+            notification.style.position = 'fixed';
+            notification.style.top = '20px';
+            notification.style.right = '20px';
+            notification.style.background = '#c0c0c0';
+            notification.style.border = '2px solid';
+            notification.style.borderColor = '#dfdfdf #808080 #808080 #dfdfdf';
+            notification.style.padding = '12px';
+            notification.style.minWidth = '200px';
+            notification.style.zIndex = '2000';
+            notification.style.animation = 'notificationSlide 0.3s ease-out';
+            notification.innerHTML = `
+                <div style="font-weight: bold; margin-bottom: 4px;">${title}</div>
+                <div style="font-size: 10px;">${message}</div>
+            `;
+            
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.style.animation = 'notificationSlideOut 0.3s ease-in';
+                setTimeout(() => {
+                    document.body.removeChild(notification);
+                }, 300);
+            }, 3000);
+        }
+        
+        // Terminal modal
+        function showTerminalModal() {
+            const modal = createModal('⌨️ Terminal', `
+                <div style="background: #000; color: #00ff00; padding: 8px; font-family: monospace; font-size: 12px;">
+                    <div>TamVo02 Developer Terminal v1.0</div>
+                    <div>Type 'help' for available commands</div>
+                    <div style="margin-top: 8px;">
+                        <span style="color: #00ff00;">C:\\TamVo02></span>
+                        <input type="text" id="terminalInput" style="background: transparent; border: none; color: #00ff00; outline: none; font-family: monospace;">
+                    </div>
+                </div>
+            `);
+            
+            document.getElementById('terminalInput').focus();
+        }
+        
+        // Settings modal
+        function showSettingsModal() {
+            const modal = createModal('⚙️ Settings', `
+                <div style="padding: 8px;">
+                    <div style="margin: 8px 0;">
+                        <strong>🎨 Theme:</strong> Retro Windows 95
+                    </div>
+                    <div style="margin: 8px 0;">
+                        <strong>🖥️ Resolution:</strong> Auto-detect
+                    </div>
+                    <div style="margin: 8px 0;">
+                        <strong>🔊 Sound:</strong> Enabled
+                    </div>
+                    <div style="margin: 8px 0;">
+                        <strong>⚡ Performance:</strong> Optimized
+                    </div>
+                </div>
+            `);
+        }
+        
+        // Create modal helper
+        function createModal(title, content) {
+            const modal = document.createElement('div');
+            modal.style.position = 'fixed';
+            modal.style.top = '50%';
+            modal.style.left = '50%';
+            modal.style.transform = 'translate(-50%, -50%)';
+            modal.style.background = '#c0c0c0';
+            modal.style.border = '2px solid';
+            modal.style.borderColor = '#dfdfdf #808080 #808080 #dfdfdf';
+            modal.style.minWidth = '300px';
+            modal.style.zIndex = '3000';
+            modal.style.animation = 'modalSlide 0.3s ease-out';
+            
+            modal.innerHTML = `
+                <div style="background: linear-gradient(90deg, #0000ff, #8080ff); color: white; padding: 4px 8px; font-weight: bold; font-size: 11px; display: flex; justify-content: space-between; align-items: center;">
+                    <span>${title}</span>
+                    <span onclick="this.parentElement.parentElement.remove()" style="cursor: pointer; padding: 2px 6px; background: #c0c0c0; color: black; border: 1px solid #808080;">✕</span>
+                </div>
+                <div>${content}</div>
+            `;
+            
+            document.body.appendChild(modal);
+            return modal;
+        }
+        
+        // Fun theme changes
+        function changeTheme() {
+            const themes = ['retro', 'neon', 'matrix', 'rainbow'];
+            const currentTheme = themes[Math.floor(Math.random() * themes.length)];
+            
+            document.body.style.filter = `hue-rotate(${Math.random() * 360}deg)`;
+            
+            setTimeout(() => {
+                document.body.style.filter = 'none';
+            }, 2000);
+        }
+        
+        // Shutdown animation
+        function performShutdown() {
+            const shutdownScreen = document.createElement('div');
+            shutdownScreen.style.position = 'fixed';
+            shutdownScreen.style.top = '0';
+            shutdownScreen.style.left = '0';
+            shutdownScreen.style.width = '100%';
+            shutdownScreen.style.height = '100%';
+            shutdownScreen.style.background = '#000';
+            shutdownScreen.style.color = '#fff';
+            shutdownScreen.style.display = 'flex';
+            shutdownScreen.style.alignItems = 'center';
+            shutdownScreen.style.justifyContent = 'center';
+            shutdownScreen.style.flexDirection = 'column';
+            shutdownScreen.style.zIndex = '10000';
+            shutdownScreen.style.animation = 'shutdownFade 2s ease-in';
+            
+            shutdownScreen.innerHTML = `
+                <div style="font-size: 24px; margin-bottom: 20px;">�</div>
+                <div style="font-size: 18px; margin-bottom: 10px;">TamVo02 Developer OS</div>
+                <div style="font-size: 14px;">It's now safe to turn off your computer.</div>
+            `;
+            
+            document.body.appendChild(shutdownScreen);
+            
+            setTimeout(() => {
+                document.body.removeChild(shutdownScreen);
+            }, 3000);
+        }
+        
+        // Add additional CSS animations
+        const additionalStyle = document.createElement('style');
+        additionalStyle.textContent = `
+            @keyframes notificationSlide {
+                from {
+                    transform: translateX(100%);
+                    opacity: 0;
+                }
+                to {
+                    transform: translateX(0);
+                    opacity: 1;
+                }
+            }
+            
+            @keyframes notificationSlideOut {
+                from {
+                    transform: translateX(0);
+                    opacity: 1;
+                }
+                to {
+                    transform: translateX(100%);
+                    opacity: 0;
+                }
+            }
+            
+            @keyframes modalSlide {
+                from {
+                    transform: translate(-50%, -50%) scale(0.8);
+                    opacity: 0;
+                }
+                to {
+                    transform: translate(-50%, -50%) scale(1);
+                    opacity: 1;
+                }
+            }
+            
+            @keyframes soundWave {
+                0% {
+                    transform: translate(-50%, -50%) scale(0);
+                    opacity: 1;
+                }
+                50% {
+                    transform: translate(-50%, -50%) scale(1.5);
+                    opacity: 0.7;
+                }
+                100% {
+                    transform: translate(-50%, -50%) scale(2);
+                    opacity: 0;
+                }
+            }
+            
+            @keyframes shutdownFade {
+                from {
+                    opacity: 0;
+                }
+                to {
+                    opacity: 1;
+                }
+            }
+        `;
+        document.head.appendChild(additionalStyle);
         
         // Resume download (placeholder)
         function downloadResume() {
