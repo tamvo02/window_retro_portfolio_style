@@ -571,25 +571,276 @@
             animation: matrixFall 10s linear infinite;
         }
         
-        @keyframes matrixFall {
-            0% {
-                transform: translateY(-100vh);
-                opacity: 0;
-            }
-            10% {
-                opacity: 1;
-            }
-            90% {
-                opacity: 1;
-            }
-            100% {
-                transform: translateY(100vh);
-                opacity: 0;
-            }
+        /* Window Management System */
+        .desktop-window {
+            position: fixed;
+            background: #c0c0c0;
+            border: 2px solid;
+            border-color: #dfdfdf #808080 #808080 #dfdfdf;
+            box-shadow: 2px 2px 10px rgba(0,0,0,0.3);
+            min-width: 300px;
+            min-height: 200px;
+            z-index: 100;
+            resize: both;
+            overflow: auto;
+        }
+        
+        .desktop-window.active {
+            z-index: 200;
+        }
+        
+        .desktop-window.minimized {
+            display: none;
+        }
+        
+        .desktop-window.maximized {
+            top: 0 !important;
+            left: 0 !important;
+            width: 100% !important;
+            height: calc(100vh - 28px) !important;
+            resize: none;
+        }
+        
+        .window-header {
+            background: linear-gradient(90deg, #0000ff, #8080ff);
+            color: white;
+            padding: 2px 4px;
+            font-weight: bold;
+            font-size: 11px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: move;
+            user-select: none;
+        }
+        
+        .window-header.inactive {
+            background: #808080;
+        }
+        
+        .window-controls {
+            display: flex;
+            gap: 2px;
+        }
+        
+        .window-control-btn {
+            background: #c0c0c0;
+            border: 1px solid;
+            border-color: #dfdfdf #808080 #808080 #dfdfdf;
+            width: 16px;
+            height: 14px;
+            font-size: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            user-select: none;
+        }
+        
+        .window-control-btn:hover {
+            background: #e0e0e0;
+        }
+        
+        .window-control-btn:active {
+            border-color: #808080 #dfdfdf #dfdfdf #808080;
+        }
+        
+        .window-body {
+            padding: 8px;
+            height: calc(100% - 24px);
+            overflow: auto;
+            background: white;
+        }
+        
+        .taskbar-button {
+            background: #c0c0c0;
+            border: 1px solid;
+            border-color: #dfdfdf #808080 #808080 #dfdfdf;
+            padding: 2px 8px;
+            font-size: 11px;
+            cursor: pointer;
+            margin-right: 2px;
+            max-width: 150px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+        
+        .taskbar-button.active {
+            background: #dfdfdf;
+            border-color: #808080 #dfdfdf #dfdfdf #808080;
+        }
+        
+        .taskbar-button:hover {
+            background: #e0e0e0;
+        }
+        
+        .desktop-icon {
+            position: fixed;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 64px;
+            height: 80px;
+            cursor: pointer;
+            user-select: none;
+            padding: 4px;
+            border-radius: 4px;
+            transition: background 0.2s;
+        }
+        
+        .desktop-icon:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+        
+        .desktop-icon.selected {
+            background: rgba(0, 0, 255, 0.2);
+        }
+        
+        .desktop-icon-image {
+            width: 32px;
+            height: 32px;
+            font-size: 32px;
+            margin-bottom: 4px;
+        }
+        
+        .desktop-icon-label {
+            font-size: 10px;
+            color: white;
+            text-align: center;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.7);
+            word-wrap: break-word;
+        }
+        
+        .context-menu {
+            position: fixed;
+            background: #c0c0c0;
+            border: 1px solid;
+            border-color: #dfdfdf #808080 #808080 #dfdfdf;
+            min-width: 120px;
+            z-index: 1000;
+            display: none;
+        }
+        
+        .context-menu-item {
+            padding: 4px 8px;
+            cursor: pointer;
+            font-size: 11px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        .context-menu-item:hover {
+            background: #0000ff;
+            color: white;
+        }
+        
+        .context-menu-separator {
+            height: 1px;
+            background: #808080;
+            margin: 2px 0;
+        }
+        
+        .window-resize-handle {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 16px;
+            height: 16px;
+            cursor: nw-resize;
+            background: linear-gradient(135deg, transparent 0%, transparent 40%, #808080 40%, #808080 60%, transparent 60%);
+        }
+        
+        .professional-toolbar {
+            background: #e0e0e0;
+            border-bottom: 1px solid #808080;
+            padding: 4px 8px;
+            font-size: 11px;
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+        
+        .toolbar-button {
+            background: #c0c0c0;
+            border: 1px solid;
+            border-color: #dfdfdf #808080 #808080 #dfdfdf;
+            padding: 2px 8px;
+            font-size: 10px;
+            cursor: pointer;
+        }
+        
+        .toolbar-button:hover {
+            background: #e0e0e0;
+        }
+        
+        .toolbar-button:active {
+            border-color: #808080 #dfdfdf #dfdfdf #808080;
+        }
+        
+        .status-bar {
+            background: #e0e0e0;
+            border-top: 1px solid #dfdfdf;
+            padding: 2px 8px;
+            font-size: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
     </style>
 </head>
 <body class="h-screen p-4">
+    <!-- Desktop Icons -->
+    <div class="desktop-icon" style="top: 20px; left: 20px;" ondblclick="openWindow('about', 'About TamVo02')">
+        <div class="desktop-icon-image">👤</div>
+        <div class="desktop-icon-label">About Me</div>
+    </div>
+    
+    <div class="desktop-icon" style="top: 20px; left: 100px;" ondblclick="openWindow('projects', 'My Projects')">
+        <div class="desktop-icon-image">📁</div>
+        <div class="desktop-icon-label">Projects</div>
+    </div>
+    
+    <div class="desktop-icon" style="top: 20px; left: 180px;" ondblclick="openWindow('skills', 'Technical Skills')">
+        <div class="desktop-icon-image">🛠️</div>
+        <div class="desktop-icon-label">Skills</div>
+    </div>
+    
+    <div class="desktop-icon" style="top: 20px; left: 260px;" ondblclick="openWindow('contact', 'Contact Info')">
+        <div class="desktop-icon-image">📧</div>
+        <div class="desktop-icon-label">Contact</div>
+    </div>
+    
+    <div class="desktop-icon" style="top: 20px; left: 340px;" ondblclick="openWindow('resume', 'Resume')">
+        <div class="desktop-icon-image">📄</div>
+        <div class="desktop-icon-label">Resume</div>
+    </div>
+    
+    <div class="desktop-icon" style="top: 20px; left: 420px;" ondblclick="openWindow('terminal', 'Terminal')">
+        <div class="desktop-icon-image">⌨️</div>
+        <div class="desktop-icon-label">Terminal</div>
+    </div>
+    
+    <div class="desktop-icon" style="top: 20px; left: 500px;" ondblclick="openWindow('calculator', 'Calculator')">
+        <div class="desktop-icon-image">🔢</div>
+        <div class="desktop-icon-label">Calculator</div>
+    </div>
+    
+    <div class="desktop-icon" style="top: 20px; left: 580px;" ondblclick="openWindow('notepad', 'Notepad')">
+        <div class="desktop-icon-image">📝</div>
+        <div class="desktop-icon-label">Notepad</div>
+    </div>
+    
+    <!-- Context Menu -->
+    <div class="context-menu" id="contextMenu">
+        <div class="context-menu-item" onclick="openWindow('about', 'About TamVo02')">Open About</div>
+        <div class="context-menu-item" onclick="openWindow('projects', 'My Projects')">Open Projects</div>
+        <div class="context-menu-separator"></div>
+        <div class="context-menu-item" onclick="refreshDesktop()">Refresh</div>
+        <div class="context-menu-item" onclick="arrangeIcons()">Arrange Icons</div>
+        <div class="context-menu-separator"></div>
+        <div class="context-menu-item" onclick="showProperties()">Properties</div>
+    </div>
+    
     <!-- Floating particles -->
     <div class="particles" id="particles"></div>
     
@@ -930,10 +1181,8 @@
             <div class="windows-logo">⊞</div>
             Start
         </div>
-        <div class="flex-1 flex">
-            <div class="button-95" style="margin-left: 8px; background: #dfdfdf;">
-                🖥️ TamVo02 Portfolio
-            </div>
+        <div class="flex-1 flex" id="taskbarButtons">
+            <!-- Dynamic taskbar buttons will be added here -->
         </div>
         <div class="clock" id="clock">
             <span id="time">10:21 AM</span>
@@ -1070,21 +1319,728 @@
             document.getElementById('time').textContent = timeString;
         }
         
-        // Start menu toggle with enhanced functionality
-        let startMenuOpen = false;
+        // Professional Window Management System
+        let windowCounter = 0;
+        let activeWindow = null;
+        let windows = {};
+        let zIndexCounter = 100;
         
-        function toggleStartMenu() {
-            const startMenu = document.getElementById('startMenu');
-            startMenuOpen = !startMenuOpen;
+        // Window content templates
+        const windowContent = {
+            about: `
+                <div class="professional-toolbar">
+                    <div class="toolbar-button" onclick="refreshWindow('about')">🔄 Refresh</div>
+                    <div class="toolbar-button" onclick="printWindow('about')">🖨️ Print</div>
+                    <div class="toolbar-button" onclick="shareWindow('about')">📤 Share</div>
+                </div>
+                <div style="padding: 16px; line-height: 1.6;">
+                    <h2 style="color: #0000ff; margin-bottom: 16px;">About TamVo02</h2>
+                    <p><strong>Hello! I'm TamVo02, a Full-Stack Developer</strong> with a passion for creating 
+                    comprehensive digital solutions from concept to deployment. I specialize in building 
+                    scalable web applications using modern technologies across the entire development stack.</p>
+                    <br>
+                    <p>My journey began with a fascination for how web applications work end-to-end, 
+                    which led me to master both frontend user experiences and backend architectures.</p>
+                    <br>
+                    <h3 style="color: #0000ff;">🎓 Professional Background:</h3>
+                    <ul>
+                        <li>Full-Stack Development Specialist</li>
+                        <li>3+ Years of End-to-End Development Experience</li>
+                        <li>Modern Web Technologies Expert</li>
+                        <li>Active Open Source Contributor</li>
+                        <li>Agile Development Practitioner</li>
+                    </ul>
+                </div>
+                <div class="status-bar">
+                    <span>Ready</span>
+                    <span>Professional Profile | TamVo02</span>
+                </div>
+            `,
+            projects: `
+                <div class="professional-toolbar">
+                    <div class="toolbar-button" onclick="newProject()">📂 New</div>
+                    <div class="toolbar-button" onclick="openProject()">📁 Open</div>
+                    <div class="toolbar-button" onclick="saveProject()">💾 Save</div>
+                    <div class="toolbar-button">|</div>
+                    <div class="toolbar-button" onclick="viewProject('list')">📋 List</div>
+                    <div class="toolbar-button" onclick="viewProject('grid')">⚏ Grid</div>
+                </div>
+                <div style="padding: 16px;">
+                    <h2 style="color: #0000ff; margin-bottom: 16px;">Full-Stack Projects</h2>
+                    
+                    <div style="border: 1px solid #808080; margin: 8px 0; padding: 12px; background: #f0f0f0;">
+                        <h3 style="color: #000080;">🛒 E-Commerce Platform</h3>
+                        <p>Complete e-commerce solution with user authentication, product management, 
+                        shopping cart, payment processing, and admin dashboard.</p>
+                        <p><strong>Tech Stack:</strong> React + TypeScript, Node.js + Express, MongoDB, Stripe API</p>
+                        <div style="margin-top: 8px;">
+                            <button class="toolbar-button" onclick="openDemo('ecommerce')">🌐 Live Demo</button>
+                            <button class="toolbar-button" onclick="openCode('ecommerce')">💻 Source Code</button>
+                        </div>
+                    </div>
+                    
+                    <div style="border: 1px solid #808080; margin: 8px 0; padding: 12px; background: #f0f0f0;">
+                        <h3 style="color: #000080;">📊 Analytics Dashboard</h3>
+                        <p>Real-time analytics platform with data visualization, user management, 
+                        and reporting features including REST API and WebSocket connections.</p>
+                        <p><strong>Tech Stack:</strong> Vue.js, Python + FastAPI, PostgreSQL, Redis, Chart.js</p>
+                        <div style="margin-top: 8px;">
+                            <button class="toolbar-button" onclick="openDemo('analytics')">🌐 Live Demo</button>
+                            <button class="toolbar-button" onclick="openCode('analytics')">💻 Source Code</button>
+                        </div>
+                    </div>
+                    
+                    <div style="border: 1px solid #808080; margin: 8px 0; padding: 12px; background: #f0f0f0;">
+                        <h3 style="color: #000080;">🎯 Task Management System</h3>
+                        <p>Comprehensive project management application with team collaboration, 
+                        drag-and-drop functionality, and real-time notifications.</p>
+                        <p><strong>Tech Stack:</strong> React + Redux, Node.js + Express, MongoDB, Socket.io</p>
+                        <div style="margin-top: 8px;">
+                            <button class="toolbar-button" onclick="openDemo('taskmanager')">🌐 Live Demo</button>
+                            <button class="toolbar-button" onclick="openCode('taskmanager')">💻 Source Code</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="status-bar">
+                    <span>3 projects loaded</span>
+                    <span>Last updated: ${new Date().toLocaleDateString()}</span>
+                </div>
+            `,
+            skills: `
+                <div class="professional-toolbar">
+                    <div class="toolbar-button" onclick="assessSkills()">📊 Assess</div>
+                    <div class="toolbar-button" onclick="exportSkills()">📤 Export</div>
+                    <div class="toolbar-button" onclick="compareSkills()">⚖️ Compare</div>
+                </div>
+                <div style="padding: 16px;">
+                    <h2 style="color: #0000ff; margin-bottom: 16px;">Technical Skills Assessment</h2>
+                    
+                    <div style="margin: 16px 0;">
+                        <h3 style="color: #000080;">Frontend Development</h3>
+                        <div style="background: #e0e0e0; height: 20px; border: 1px solid #808080; margin: 4px 0;">
+                            <div style="background: linear-gradient(90deg, #0000ff, #00ffff); height: 100%; width: 92%; display: flex; align-items: center; justify-content: center; color: white; font-size: 10px;">92%</div>
+                        </div>
+                        <small>React, Vue.js, Angular, TypeScript, HTML5, CSS3, Tailwind CSS</small>
+                    </div>
+                    
+                    <div style="margin: 16px 0;">
+                        <h3 style="color: #000080;">Backend Development</h3>
+                        <div style="background: #e0e0e0; height: 20px; border: 1px solid #808080; margin: 4px 0;">
+                            <div style="background: linear-gradient(90deg, #0000ff, #00ffff); height: 100%; width: 90%; display: flex; align-items: center; justify-content: center; color: white; font-size: 10px;">90%</div>
+                        </div>
+                        <small>Node.js, Python, Express.js, FastAPI, RESTful APIs, GraphQL</small>
+                    </div>
+                    
+                    <div style="margin: 16px 0;">
+                        <h3 style="color: #000080;">Database & Storage</h3>
+                        <div style="background: #e0e0e0; height: 20px; border: 1px solid #808080; margin: 4px 0;">
+                            <div style="background: linear-gradient(90deg, #0000ff, #00ffff); height: 100%; width: 85%; display: flex; align-items: center; justify-content: center; color: white; font-size: 10px;">85%</div>
+                        </div>
+                        <small>MongoDB, PostgreSQL, MySQL, Redis, Firebase</small>
+                    </div>
+                    
+                    <div style="margin: 16px 0;">
+                        <h3 style="color: #000080;">Cloud & DevOps</h3>
+                        <div style="background: #e0e0e0; height: 20px; border: 1px solid #808080; margin: 4px 0;">
+                            <div style="background: linear-gradient(90deg, #0000ff, #00ffff); height: 100%; width: 80%; display: flex; align-items: center; justify-content: center; color: white; font-size: 10px;">80%</div>
+                        </div>
+                        <small>AWS, Docker, Kubernetes, CI/CD, Git, GitHub Actions</small>
+                    </div>
+                </div>
+                <div class="status-bar">
+                    <span>Skills assessed</span>
+                    <span>Overall proficiency: Expert Level</span>
+                </div>
+            `,
+            contact: `
+                <div class="professional-toolbar">
+                    <div class="toolbar-button" onclick="composeEmail()">✉️ Email</div>
+                    <div class="toolbar-button" onclick="scheduleCall()">📞 Call</div>
+                    <div class="toolbar-button" onclick="exportContact()">📇 Export</div>
+                </div>
+                <div style="padding: 16px;">
+                    <h2 style="color: #0000ff; margin-bottom: 16px;">Contact Information</h2>
+                    
+                    <div style="background: #f0f0f0; padding: 16px; border: 1px solid #808080; margin: 16px 0;">
+                        <h3 style="color: #000080;">📧 Email</h3>
+                        <p><a href="mailto:tamvo02.dev@gmail.com" style="color: #0000ff;">tamvo02.dev@gmail.com</a></p>
+                        <p><small>Response time: Usually within 24 hours</small></p>
+                    </div>
+                    
+                    <div style="background: #f0f0f0; padding: 16px; border: 1px solid #808080; margin: 16px 0;">
+                        <h3 style="color: #000080;">🔗 Professional Links</h3>
+                        <p><a href="https://github.com/TamVo02" target="_blank" style="color: #0000ff;">GitHub Profile</a></p>
+                        <p><a href="https://linkedin.com/in/tamvo02" target="_blank" style="color: #0000ff;">LinkedIn Profile</a></p>
+                        <p><a href="https://twitter.com/tamvo02dev" target="_blank" style="color: #0000ff;">Twitter / X</a></p>
+                    </div>
+                    
+                    <div style="background: #f0f0f0; padding: 16px; border: 1px solid #808080; margin: 16px 0;">
+                        <h3 style="color: #000080;">💼 Availability</h3>
+                        <p><strong>Location:</strong> Available for remote work & collaboration</p>
+                        <p><strong>Time Zone:</strong> Flexible across time zones</p>
+                        <p><strong>Open to:</strong> Full-stack projects, technical consulting, code reviews</p>
+                    </div>
+                </div>
+                <div class="status-bar">
+                    <span>Contact information current</span>
+                    <span>Available for collaboration</span>
+                </div>
+            `,
+            resume: `
+                <div class="professional-toolbar">
+                    <div class="toolbar-button" onclick="downloadResume()">💾 Download PDF</div>
+                    <div class="toolbar-button" onclick="printResume()">🖨️ Print</div>
+                    <div class="toolbar-button" onclick="shareResume()">📤 Share</div>
+                </div>
+                <div style="padding: 16px;">
+                    <h2 style="color: #0000ff; margin-bottom: 16px;">Professional Resume</h2>
+                    
+                    <div style="background: #f0f0f0; padding: 16px; border: 1px solid #808080; margin: 16px 0;">
+                        <h3 style="color: #000080;">🎯 Professional Summary</h3>
+                        <p>Full-Stack Developer with 3+ years of experience building web applications 
+                        and scalable solutions. Passionate about clean code, user experience, 
+                        and innovative technology solutions.</p>
+                    </div>
+                    
+                    <div style="background: #f0f0f0; padding: 16px; border: 1px solid #808080; margin: 16px 0;">
+                        <h3 style="color: #000080;">💼 Key Experience</h3>
+                        <ul>
+                            <li>Frontend Development (React, Vue.js, Angular, TypeScript)</li>
+                            <li>Backend Development (Node.js, Python, Express.js, FastAPI)</li>
+                            <li>Database Design & Management (MongoDB, PostgreSQL, MySQL)</li>
+                            <li>API Development & Integration (REST, GraphQL)</li>
+                            <li>DevOps & Cloud Deployment (AWS, Docker, Kubernetes)</li>
+                            <li>Mobile Development (React Native, Flutter)</li>
+                        </ul>
+                    </div>
+                    
+                    <div style="background: #f0f0f0; padding: 16px; border: 1px solid #808080; margin: 16px 0;">
+                        <h3 style="color: #000080;">🎓 Education & Certifications</h3>
+                        <p>• Bachelor's in Computer Science</p>
+                        <p>• AWS Certified Developer</p>
+                        <p>• Google Cloud Professional</p>
+                        <p>• Continuous professional development</p>
+                    </div>
+                </div>
+                <div class="status-bar">
+                    <span>Resume current as of ${new Date().toLocaleDateString()}</span>
+                    <span>Available for download</span>
+                </div>
+            `,
+            terminal: `
+                <div style="background: #000; color: #00ff00; padding: 8px; height: 400px; font-family: 'Courier New', monospace; font-size: 12px; overflow-y: auto;" id="terminalContent">
+                    <div>TamVo02 Developer Terminal v2.0</div>
+                    <div>Copyright (c) 2025 TamVo02. All rights reserved.</div>
+                    <div>Type 'help' for available commands</div>
+                    <div style="margin-top: 8px;">
+                        <div id="terminalHistory"></div>
+                        <div style="display: flex;">
+                            <span style="color: #00ff00;">C:\\TamVo02></span>
+                            <input type="text" id="terminalInput" style="background: transparent; border: none; color: #00ff00; outline: none; font-family: monospace; flex: 1; margin-left: 4px;" onkeypress="handleTerminalInput(event)">
+                        </div>
+                    </div>
+                </div>
+            `,
+            calculator: `
+                <div style="background: #c0c0c0; padding: 8px;">
+                    <div style="background: #000; color: #00ff00; padding: 8px; text-align: right; font-family: 'Courier New', monospace; font-size: 16px; margin-bottom: 8px; border: 1px solid #808080;" id="calcDisplay">0</div>
+                    <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 4px;">
+                        <button class="toolbar-button" onclick="clearCalc()">C</button>
+                        <button class="toolbar-button" onclick="calcOperation('/')">/</button>
+                        <button class="toolbar-button" onclick="calcOperation('*')">*</button>
+                        <button class="toolbar-button" onclick="calcBackspace()">←</button>
+                        <button class="toolbar-button" onclick="calcNumber('7')">7</button>
+                        <button class="toolbar-button" onclick="calcNumber('8')">8</button>
+                        <button class="toolbar-button" onclick="calcNumber('9')">9</button>
+                        <button class="toolbar-button" onclick="calcOperation('-')">-</button>
+                        <button class="toolbar-button" onclick="calcNumber('4')">4</button>
+                        <button class="toolbar-button" onclick="calcNumber('5')">5</button>
+                        <button class="toolbar-button" onclick="calcNumber('6')">6</button>
+                        <button class="toolbar-button" onclick="calcOperation('+')">+</button>
+                        <button class="toolbar-button" onclick="calcNumber('1')">1</button>
+                        <button class="toolbar-button" onclick="calcNumber('2')">2</button>
+                        <button class="toolbar-button" onclick="calcNumber('3')">3</button>
+                        <button class="toolbar-button" onclick="calcEquals()" style="grid-row: span 2;">=</button>
+                        <button class="toolbar-button" onclick="calcNumber('0')" style="grid-column: span 2;">0</button>
+                        <button class="toolbar-button" onclick="calcNumber('.')">.</button>
+                    </div>
+                </div>
+            `,
+            notepad: `
+                <div class="professional-toolbar">
+                    <div class="toolbar-button" onclick="newFile()">📄 New</div>
+                    <div class="toolbar-button" onclick="openFile()">📁 Open</div>
+                    <div class="toolbar-button" onclick="saveFile()">💾 Save</div>
+                    <div class="toolbar-button">|</div>
+                    <div class="toolbar-button" onclick="cutText()">✂️ Cut</div>
+                    <div class="toolbar-button" onclick="copyText()">📋 Copy</div>
+                    <div class="toolbar-button" onclick="pasteText()">📌 Paste</div>
+                </div>
+                <textarea style="width: 100%; height: 300px; border: none; padding: 8px; font-family: 'Courier New', monospace; font-size: 12px; resize: none;" placeholder="Start typing..." id="notepadContent">Welcome to TamVo02's Notepad!
+
+This is a fully functional text editor within the portfolio.
+
+You can:
+- Type and edit text
+- Use the toolbar buttons
+- Save your work (simulated)
+- Experience a real Windows 95 application
+
+Try typing something here!</textarea>
+                <div class="status-bar">
+                    <span>Ready</span>
+                    <span>Line 1, Column 1</span>
+                </div>
+            `
+        };
+        
+        // Open a new window
+        function openWindow(type, title) {
+            const windowId = `window_${windowCounter++}`;
             
-            if (startMenuOpen) {
-                startMenu.classList.add('show');
-                playStartSound();
-                addStartMenuGlow();
-            } else {
-                startMenu.classList.remove('show');
+            const windowDiv = document.createElement('div');
+            windowDiv.className = 'desktop-window active';
+            windowDiv.id = windowId;
+            windowDiv.style.top = (50 + (Object.keys(windows).length * 30)) + 'px';
+            windowDiv.style.left = (100 + (Object.keys(windows).length * 30)) + 'px';
+            windowDiv.style.width = '600px';
+            windowDiv.style.height = '500px';
+            windowDiv.style.zIndex = ++zIndexCounter;
+            
+            windowDiv.innerHTML = `
+                <div class="window-header" onmousedown="startDrag(event, '${windowId}')">
+                    <span>${title}</span>
+                    <div class="window-controls">
+                        <div class="window-control-btn" onclick="minimizeWindow('${windowId}')">_</div>
+                        <div class="window-control-btn" onclick="maximizeWindow('${windowId}')">□</div>
+                        <div class="window-control-btn" onclick="closeWindow('${windowId}')">✕</div>
+                    </div>
+                </div>
+                <div class="window-body">
+                    ${windowContent[type] || '<p>Content not available</p>'}
+                </div>
+                <div class="window-resize-handle" onmousedown="startResize(event, '${windowId}')"></div>
+            `;
+            
+            document.body.appendChild(windowDiv);
+            
+            // Add to windows registry
+            windows[windowId] = {
+                type: type,
+                title: title,
+                element: windowDiv,
+                minimized: false,
+                maximized: false
+            };
+            
+            // Add taskbar button
+            addTaskbarButton(windowId, title);
+            
+            // Set as active window
+            setActiveWindow(windowId);
+            
+            // Focus terminal input if it's a terminal window
+            if (type === 'terminal') {
+                setTimeout(() => {
+                    const terminalInput = document.getElementById('terminalInput');
+                    if (terminalInput) terminalInput.focus();
+                }, 100);
+            }
+            
+            return windowId;
+        }
+        
+        // Window controls
+        function closeWindow(windowId) {
+            if (windows[windowId]) {
+                document.body.removeChild(windows[windowId].element);
+                removeTaskbarButton(windowId);
+                delete windows[windowId];
+                
+                // Set another window as active
+                const remainingWindows = Object.keys(windows);
+                if (remainingWindows.length > 0) {
+                    setActiveWindow(remainingWindows[0]);
+                } else {
+                    activeWindow = null;
+                }
             }
         }
+        
+        function minimizeWindow(windowId) {
+            if (windows[windowId]) {
+                windows[windowId].element.classList.add('minimized');
+                windows[windowId].minimized = true;
+                updateTaskbarButton(windowId, false);
+                
+                // Set another window as active
+                const visibleWindows = Object.keys(windows).filter(id => !windows[id].minimized);
+                if (visibleWindows.length > 0) {
+                    setActiveWindow(visibleWindows[0]);
+                } else {
+                    activeWindow = null;
+                }
+            }
+        }
+        
+        function maximizeWindow(windowId) {
+            if (windows[windowId]) {
+                const windowEl = windows[windowId].element;
+                if (windows[windowId].maximized) {
+                    windowEl.classList.remove('maximized');
+                    windows[windowId].maximized = false;
+                } else {
+                    windowEl.classList.add('maximized');
+                    windows[windowId].maximized = true;
+                }
+                setActiveWindow(windowId);
+            }
+        }
+        
+        function restoreWindow(windowId) {
+            if (windows[windowId] && windows[windowId].minimized) {
+                windows[windowId].element.classList.remove('minimized');
+                windows[windowId].minimized = false;
+                updateTaskbarButton(windowId, true);
+                setActiveWindow(windowId);
+            }
+        }
+        
+        function setActiveWindow(windowId) {
+            // Remove active class from all windows
+            Object.keys(windows).forEach(id => {
+                windows[id].element.classList.remove('active');
+                const header = windows[id].element.querySelector('.window-header');
+                header.classList.add('inactive');
+            });
+            
+            // Set active window
+            if (windows[windowId]) {
+                windows[windowId].element.classList.add('active');
+                windows[windowId].element.style.zIndex = ++zIndexCounter;
+                const header = windows[windowId].element.querySelector('.window-header');
+                header.classList.remove('inactive');
+                activeWindow = windowId;
+                
+                // Update taskbar buttons
+                updateTaskbarButtons();
+            }
+        }
+        
+        // Taskbar management
+        function addTaskbarButton(windowId, title) {
+            const taskbarButtons = document.getElementById('taskbarButtons');
+            const button = document.createElement('div');
+            button.className = 'taskbar-button';
+            button.id = `taskbar_${windowId}`;
+            button.textContent = title;
+            button.onclick = () => {
+                if (windows[windowId].minimized) {
+                    restoreWindow(windowId);
+                } else {
+                    setActiveWindow(windowId);
+                }
+            };
+            taskbarButtons.appendChild(button);
+        }
+        
+        function removeTaskbarButton(windowId) {
+            const button = document.getElementById(`taskbar_${windowId}`);
+            if (button) {
+                button.remove();
+            }
+        }
+        
+        function updateTaskbarButton(windowId, active) {
+            const button = document.getElementById(`taskbar_${windowId}`);
+            if (button) {
+                if (active) {
+                    button.classList.add('active');
+                } else {
+                    button.classList.remove('active');
+                }
+            }
+        }
+        
+        function updateTaskbarButtons() {
+            Object.keys(windows).forEach(windowId => {
+                const button = document.getElementById(`taskbar_${windowId}`);
+                if (button) {
+                    if (windowId === activeWindow) {
+                        button.classList.add('active');
+                    } else {
+                        button.classList.remove('active');
+                    }
+                }
+            });
+        }
+        
+        // Drag and drop functionality
+        let dragData = null;
+        
+        function startDrag(event, windowId) {
+            if (windows[windowId].maximized) return;
+            
+            dragData = {
+                windowId: windowId,
+                startX: event.clientX,
+                startY: event.clientY,
+                startLeft: parseInt(windows[windowId].element.style.left),
+                startTop: parseInt(windows[windowId].element.style.top)
+            };
+            
+            setActiveWindow(windowId);
+            document.addEventListener('mousemove', drag);
+            document.addEventListener('mouseup', stopDrag);
+            event.preventDefault();
+        }
+        
+        function drag(event) {
+            if (!dragData) return;
+            
+            const dx = event.clientX - dragData.startX;
+            const dy = event.clientY - dragData.startY;
+            
+            windows[dragData.windowId].element.style.left = (dragData.startLeft + dx) + 'px';
+            windows[dragData.windowId].element.style.top = (dragData.startTop + dy) + 'px';
+        }
+        
+        function stopDrag() {
+            dragData = null;
+            document.removeEventListener('mousemove', drag);
+            document.removeEventListener('mouseup', stopDrag);
+        }
+        
+        // Window resize functionality
+        let resizeData = null;
+        
+        function startResize(event, windowId) {
+            resizeData = {
+                windowId: windowId,
+                startX: event.clientX,
+                startY: event.clientY,
+                startWidth: parseInt(window.getComputedStyle(windows[windowId].element).width),
+                startHeight: parseInt(window.getComputedStyle(windows[windowId].element).height)
+            };
+            
+            document.addEventListener('mousemove', resize);
+            document.addEventListener('mouseup', stopResize);
+            event.preventDefault();
+            event.stopPropagation();
+        }
+        
+        function resize(event) {
+            if (!resizeData) return;
+            
+            const dx = event.clientX - resizeData.startX;
+            const dy = event.clientY - resizeData.startY;
+            
+            const newWidth = Math.max(300, resizeData.startWidth + dx);
+            const newHeight = Math.max(200, resizeData.startHeight + dy);
+            
+            windows[resizeData.windowId].element.style.width = newWidth + 'px';
+            windows[resizeData.windowId].element.style.height = newHeight + 'px';
+        }
+        
+        function stopResize() {
+            resizeData = null;
+            document.removeEventListener('mousemove', resize);
+            document.removeEventListener('mouseup', stopResize);
+        }
+        
+        // Right-click context menu
+        document.addEventListener('contextmenu', function(event) {
+            event.preventDefault();
+            const contextMenu = document.getElementById('contextMenu');
+            contextMenu.style.display = 'block';
+            contextMenu.style.left = event.clientX + 'px';
+            contextMenu.style.top = event.clientY + 'px';
+        });
+        
+        document.addEventListener('click', function(event) {
+            const contextMenu = document.getElementById('contextMenu');
+            if (!contextMenu.contains(event.target)) {
+                contextMenu.style.display = 'none';
+            }
+        });
+        
+        // Context menu functions
+        function refreshDesktop() {
+            document.getElementById('contextMenu').style.display = 'none';
+            showNotification('🔄 Refresh', 'Desktop refreshed successfully!');
+        }
+        
+        function arrangeIcons() {
+            document.getElementById('contextMenu').style.display = 'none';
+            showNotification('📋 Arrange', 'Icons arranged automatically!');
+        }
+        
+        function showProperties() {
+            document.getElementById('contextMenu').style.display = 'none';
+            openWindow('about', 'System Properties');
+        }
+        
+        // Terminal functionality
+        let terminalHistory = [];
+        let terminalCommands = {
+            'help': 'Available commands: help, clear, dir, cd, whoami, date, time, skills, projects, contact, exit',
+            'clear': () => {
+                document.getElementById('terminalHistory').innerHTML = '';
+                return '';
+            },
+            'dir': 'Directory listing:\n  about.txt\n  projects.txt\n  skills.txt\n  contact.txt\n  resume.pdf',
+            'cd': 'Cannot change directory in this demo',
+            'whoami': 'TamVo02 - Full-Stack Developer',
+            'date': () => new Date().toDateString(),
+            'time': () => new Date().toLocaleTimeString(),
+            'skills': 'Opening skills window...',
+            'projects': 'Opening projects window...',
+            'contact': 'Opening contact window...',
+            'exit': () => {
+                const terminalWindows = Object.keys(windows).filter(id => windows[id].type === 'terminal');
+                if (terminalWindows.length > 0) {
+                    closeWindow(terminalWindows[0]);
+                }
+                return '';
+            }
+        };
+        
+        function handleTerminalInput(event) {
+            if (event.key === 'Enter') {
+                const input = event.target.value.trim();
+                const history = document.getElementById('terminalHistory');
+                
+                // Add command to history
+                history.innerHTML += `<div><span style="color: #00ff00;">C:\\TamVo02></span> ${input}</div>`;
+                
+                // Process command
+                if (input) {
+                    let output = '';
+                    const cmd = input.toLowerCase();
+                    
+                    if (terminalCommands[cmd]) {
+                        if (typeof terminalCommands[cmd] === 'function') {
+                            output = terminalCommands[cmd]();
+                        } else {
+                            output = terminalCommands[cmd];
+                        }
+                        
+                        // Handle special commands
+                        if (cmd === 'skills') {
+                            openWindow('skills', 'Technical Skills');
+                        } else if (cmd === 'projects') {
+                            openWindow('projects', 'My Projects');
+                        } else if (cmd === 'contact') {
+                            openWindow('contact', 'Contact Info');
+                        }
+                    } else {
+                        output = `'${input}' is not recognized as an internal or external command.`;
+                    }
+                    
+                    if (output) {
+                        history.innerHTML += `<div style="color: #ffffff;">${output}</div>`;
+                    }
+                }
+                
+                event.target.value = '';
+                
+                // Scroll to bottom
+                const terminalContent = document.getElementById('terminalContent');
+                terminalContent.scrollTop = terminalContent.scrollHeight;
+            }
+        }
+        
+        // Calculator functionality
+        let calcCurrentValue = '0';
+        let calcOperation = null;
+        let calcPreviousValue = null;
+        let calcWaitingForOperand = false;
+        
+        function updateCalcDisplay() {
+            const display = document.getElementById('calcDisplay');
+            if (display) {
+                display.textContent = calcCurrentValue;
+            }
+        }
+        
+        function calcNumber(num) {
+            if (calcWaitingForOperand) {
+                calcCurrentValue = num;
+                calcWaitingForOperand = false;
+            } else {
+                calcCurrentValue = calcCurrentValue === '0' ? num : calcCurrentValue + num;
+            }
+            updateCalcDisplay();
+        }
+        
+        function calcOperation(op) {
+            if (calcPreviousValue === null) {
+                calcPreviousValue = calcCurrentValue;
+            } else if (calcOperation) {
+                const result = calculate();
+                calcCurrentValue = String(result);
+                calcPreviousValue = calcCurrentValue;
+                updateCalcDisplay();
+            }
+            
+            calcWaitingForOperand = true;
+            calcOperation = op;
+        }
+        
+        function calcEquals() {
+            if (calcPreviousValue !== null && calcOperation) {
+                const result = calculate();
+                calcCurrentValue = String(result);
+                calcPreviousValue = null;
+                calcOperation = null;
+                calcWaitingForOperand = true;
+                updateCalcDisplay();
+            }
+        }
+        
+        function calculate() {
+            const prev = parseFloat(calcPreviousValue);
+            const current = parseFloat(calcCurrentValue);
+            
+            switch (calcOperation) {
+                case '+': return prev + current;
+                case '-': return prev - current;
+                case '*': return prev * current;
+                case '/': return prev / current;
+                default: return current;
+            }
+        }
+        
+        function clearCalc() {
+            calcCurrentValue = '0';
+            calcPreviousValue = null;
+            calcOperation = null;
+            calcWaitingForOperand = false;
+            updateCalcDisplay();
+        }
+        
+        function calcBackspace() {
+            if (calcCurrentValue.length > 1) {
+                calcCurrentValue = calcCurrentValue.slice(0, -1);
+            } else {
+                calcCurrentValue = '0';
+            }
+            updateCalcDisplay();
+        }
+        
+        // Initialize desktop
+        document.addEventListener('DOMContentLoaded', function() {
+            // Hide the old portfolio window
+            const oldWindow = document.querySelector('.window-95');
+            if (oldWindow && oldWindow.querySelector('.sidebar')) {
+                oldWindow.style.display = 'none';
+            }
+            
+            // Initialize welcome window
+            setTimeout(() => {
+                openWindow('about', 'Welcome to TamVo02 Portfolio');
+            }, 1000);
+        });
         
         // Close start menu when clicking outside
         document.addEventListener('click', function(e) {
