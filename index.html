@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TamVo02 - Full-Stack Developer Portfolio</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=MS+Sans+Serif:wght@400;700&display=swap');
+        
+        * {
+            font-family: 'MS Sans Serif', sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(45deg, #008080, #20B2AA);
+            background-size: 400% 400%;
+            animation: gradientShift 10s ease infinite;
+            overflow: hidden;
+        }
+        
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        .window-95 {
+            background: #c0c0c0;
+            border: 2px solid;
+            border-color: #dfdfdf #808080 #808080 #dfdfdf;
+            box-shadow: 1px 1px 0 #000000;
+        }
+        
+        .window-titlebar {
+            background: linear-gradient(90deg, #0000ff, #8080ff);
+            color: white;
+            padding: 2px 4px;
+            font-weight: bold;
+            font-size: 11px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .window-button {
+            background: #c0c0c0;
+            border: 1px solid;
+            border-color: #dfdfdf #808080 #808080 #dfdfdf;
+            width: 16px;
+            height: 14px;
+            font-size: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+        
+        .window-button:active {
+            border-color: #808080 #dfdfdf #dfdfdf #808080;
+        }
+        
+        .button-95 {
+            background: #c0c0c0;
+            border: 2px solid;
+            border-color: #dfdfdf #808080 #808080 #dfdfdf;
+            padding: 4px 16px;
+            font-size: 11px;
+            cursor: pointer;
+            margin: 2px;
+        }
+        
+        .button-95:active {
+            border-color: #808080 #dfdfdf #dfdfdf #808080;
+        }
+        
+        .button-95:hover {
+            background: #d0d0d0;
+        }
+        
+        .taskbar {
+            background: #c0c0c0;
+            border-top: 1px solid #dfdfdf;
+            height: 28px;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            display: flex;
+            align-items: center;
+            padding: 0 4px;
+            justify-content: space-between;
+        }
+        
+        .start-button {
+            background: #c0c0c0;
+            border: 1px solid;
+            border-color: #dfdfdf #808080 #808080 #dfdfdf;
+            padding: 2px 6px;
+            font-size: 11px;
+            font-weight: bold;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        
+        .start-button:active {
+            border-color: #808080 #dfdfdf #dfdfdf #808080;
+        }
+        
+        .clock {
+            background: #c0c0c0;
+            border: 1px solid;
+            border-color: #808080 #dfdfdf #dfdfdf #808080;
+            padding: 2px 6px;
+            font-size: 11px;
+        }
+        
+        .content-area {
+            background: #ffffff;
+            border: 1px solid;
+            border-color: #808080 #dfdfdf #dfdfdf #808080;
+            margin: 4px;
+            padding: 8px;
+            height: calc(100% - 16px);
+            overflow-y: auto;
+        }
+        
+        .sidebar {
+            background: #c0c0c0;
+            width: 120px;
+            padding: 4px;
+            border-right: 1px solid #808080;
+            height: 100%;
+            overflow-y: auto;
+        }
+        
+        .tab-active {
+            background: #ffffff;
+            border-color: #dfdfdf #808080 #ffffff #dfdfdf;
+            border-bottom: 1px solid #ffffff;
+        }
+        
+        .lightbulb {
+            color: #ffff00;
+            font-size: 14px;
+        }
+        
+        .fade-in {
+            animation: fadeIn 0.3s ease-in;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .skill-bar {
+            background: #c0c0c0;
+            border: 1px solid;
+            border-color: #808080 #dfdfdf #dfdfdf #808080;
+            height: 20px;
+            margin: 4px 0;
+            position: relative;
+        }
+        
+        .skill-progress {
+            background: #0000ff;
+            height: 100%;
+            transition: width 2s ease;
+        }
+        
+        .project-card {
+            background: #c0c0c0;
+            border: 1px solid;
+            border-color: #dfdfdf #808080 #808080 #dfdfdf;
+            margin: 8px 0;
+            padding: 8px;
+        }
+        
+        .highlight {
+            background: #ffff00;
+            padding: 2px 4px;
+        }
+    </style>
+</head>
+<body class="h-screen p-4">
+    <div class="window-95 h-full max-w-5xl mx-auto">
+        <!-- Window Title Bar -->
+        <div class="window-titlebar">
+            <span>🖥️ TamVo02 - Full-Stack Developer Portfolio</span>
+            <div class="flex gap-1">
+                <div class="window-button">_</div>
+                <div class="window-button">□</div>
+                <div class="window-button">✕</div>
+            </div>
+        </div>
+        
+        <!-- Window Content -->
+        <div class="flex h-full">
+            <!-- Sidebar -->
+            <div class="sidebar">
+                <div class="button-95 w-full text-center" onclick="showTab('welcome')">🏠 Welcome</div>
+                <div class="button-95 w-full text-center" onclick="showTab('about')">👤 About Me</div>
+                <div class="button-95 w-full text-center" onclick="showTab('skills')">🛠️ Skills</div>
+                <div class="button-95 w-full text-center" onclick="showTab('projects')">📁 Projects</div>
+                <div class="button-95 w-full text-center" onclick="showTab('contact')">📧 Contact</div>
+                <hr style="border-color: #808080; margin: 8px 0;">
+                <div class="button-95 w-full text-center" onclick="showTab('resume')">📄 Resume</div>
+                <div class="button-95 w-full text-center" onclick="window.open('https://github.com', '_blank')">💻 GitHub ↗</div>
+                <div class="button-95 w-full text-center" onclick="window.open('https://linkedin.com', '_blank')">💼 LinkedIn ↗</div>
+            </div>
+            
+            <!-- Main Content Area -->
+            <div class="content-area flex-1">
+                <!-- Welcome Tab -->
+                <div id="welcome" class="tab-content fade-in">
+                    <h2 style="font-size: 16px; font-weight: bold; margin-bottom: 12px;">Welcome to TamVo02's Portfolio</h2>
+                    
+                    <div style="background: #ffffcc; padding: 8px; border: 1px solid #808080; margin: 8px 0;">
+                        <div style="font-weight: bold; margin-bottom: 4px;">� Hello! I'm TamVo02</div>
+                        <ul style="margin-left: 16px; line-height: 1.4;">
+                            <li>Full-Stack Developer passionate about creating innovative solutions</li>
+                            <li>Experienced in both frontend and backend technologies</li>
+                            <li>Love building scalable web applications with modern tech stacks</li>
+                            <li>Always excited to take on new challenges and learn cutting-edge technologies</li>
+                        </ul>
+                    </div>
+                    
+                    <p style="margin: 12px 0; line-height: 1.4;">
+                        Welcome to my digital portfolio! I'm TamVo02, a passionate Full-Stack Developer who 
+                        loves creating innovative solutions that bridge the gap between user needs and 
+                        technical possibilities. This retro-styled portfolio showcases my journey in 
+                        full-stack development, combining nostalgic design with modern functionality.
+                    </p>
+                    
+                    <div style="background: #f0f0f0; padding: 8px; border: 1px solid #808080; margin: 12px 0;">
+                        <strong>🎯 What you'll discover:</strong><br>
+                        • My full-stack development expertise<br>
+                        • Projects demonstrating end-to-end solutions<br>
+                        • Technologies I work with daily<br>
+                        • Ways to collaborate and connect
+                    </div>
+                </div>
+                
+                <!-- About Tab -->
+                <div id="about" class="tab-content hidden fade-in">
+                    <h2 style="font-size: 16px; font-weight: bold; margin-bottom: 12px;">About TamVo02</h2>
+                    
+                    <div style="background: #f0f0f0; padding: 12px; border: 1px solid #808080; margin: 8px 0;">
+                        <p style="margin-bottom: 8px;">
+                            <strong>Hello! I'm TamVo02, a Full-Stack Developer</strong> with a passion for creating 
+                            comprehensive digital solutions from concept to deployment. I specialize in building 
+                            scalable web applications using modern technologies across the entire development stack.
+                        </p>
+                        
+                        <p style="margin-bottom: 8px;">
+                            My journey began with a fascination for how web applications work end-to-end, 
+                            which led me to master both frontend user experiences and backend architectures. 
+                            I enjoy the challenge of creating seamless integrations between user interfaces 
+                            and server-side logic.
+                        </p>
+                        
+                        <p>
+                            When I'm not coding, you'll find me exploring emerging technologies, contributing 
+                            to open-source projects, and sharing knowledge with the developer community. 
+                            I believe in continuous learning and staying current with industry trends.
+                        </p>
+                    </div>
+                    
+                    <div style="margin: 12px 0;">
+                        <strong>🎓 Professional Background:</strong><br>
+                        • Full-Stack Development Specialist<br>
+                        • 3+ Years of End-to-End Development Experience<br>
+                        • Modern Web Technologies Expert<br>
+                        • Active Open Source Contributor<br>
+                        • Agile Development Practitioner
+                    </div>
+                    
+                    <div style="margin: 12px 0;">
+                        <strong>🌟 Core Interests:</strong><br>
+                        • Full-Stack Web Development<br>
+                        • API Design & Development<br>
+                        • Database Architecture & Optimization<br>
+                        • Cloud Computing & DevOps<br>
+                        • Modern JavaScript Frameworks<br>
+                        • User Experience & Interface Design
+                    </div>
+                </div>
+                
+                <!-- Skills Tab -->
+                <div id="skills" class="tab-content hidden fade-in">
+                    <h2 style="font-size: 16px; font-weight: bold; margin-bottom: 12px;">Full-Stack Technical Skills</h2>
+                    
+                    <div style="margin: 12px 0;">
+                        <strong>Frontend Development:</strong>
+                        <div class="skill-bar">
+                            <div class="skill-progress" style="width: 92%"></div>
+                        </div>
+                        <small>React, Vue.js, Angular, TypeScript, HTML5, CSS3, Tailwind CSS</small>
+                    </div>
+                    
+                    <div style="margin: 12px 0;">
+                        <strong>Backend Development:</strong>
+                        <div class="skill-bar">
+                            <div class="skill-progress" style="width: 90%"></div>
+                        </div>
+                        <small>Node.js, Python, Express.js, FastAPI, RESTful APIs, GraphQL</small>
+                    </div>
+                    
+                    <div style="margin: 12px 0;">
+                        <strong>Database & Storage:</strong>
+                        <div class="skill-bar">
+                            <div class="skill-progress" style="width: 85%"></div>
+                        </div>
+                        <small>MongoDB, PostgreSQL, MySQL, Redis, Firebase</small>
+                    </div>
+                    
+                    <div style="margin: 12px 0;">
+                        <strong>Cloud & DevOps:</strong>
+                        <div class="skill-bar">
+                            <div class="skill-progress" style="width: 80%"></div>
+                        </div>
+                        <small>AWS, Docker, Kubernetes, CI/CD, Git, GitHub Actions</small>
+                    </div>
+                    
+                    <div style="margin: 12px 0;">
+                        <strong>Mobile Development:</strong>
+                        <div class="skill-bar">
+                            <div class="skill-progress" style="width: 75%"></div>
+                        </div>
+                        <small>React Native, Flutter, Progressive Web Apps</small>
+                    </div>
+                    
+                    <div style="background: #e0e0e0; padding: 8px; border: 1px solid #808080; margin: 12px 0;">
+                        <strong>🔧 Full-Stack Expertise:</strong><br>
+                        • End-to-End Application Development<br>
+                        • API Design & Integration<br>
+                        • Database Design & Optimization<br>
+                        • Authentication & Security<br>
+                        • Performance Optimization<br>
+                        • Responsive & Mobile-First Design<br>
+                        • Test-Driven Development (TDD)<br>
+                        • Agile Development Methodologies
+                    </div>
+                </div>
+                
+                <!-- Projects Tab -->
+                <div id="projects" class="tab-content hidden fade-in">
+                    <h2 style="font-size: 16px; font-weight: bold; margin-bottom: 12px;">Full-Stack Projects</h2>
+                    
+                    <div class="project-card">
+                        <h3 style="font-weight: bold; margin-bottom: 4px;">🛒 Full-Stack E-Commerce Platform</h3>
+                        <p style="margin-bottom: 6px;">
+                            Complete e-commerce solution with user authentication, product management, 
+                            shopping cart, payment processing, and admin dashboard. Built with modern 
+                            full-stack architecture.
+                        </p>
+                        <div style="font-size: 10px; color: #666;">
+                            <strong>Tech Stack:</strong> React + TypeScript, Node.js + Express, MongoDB, Stripe API, JWT Auth
+                        </div>
+                        <div style="margin-top: 4px;">
+                            <span class="button-95" style="font-size: 9px; padding: 2px 6px;">Live Demo</span>
+                            <span class="button-95" style="font-size: 9px; padding: 2px 6px;">Source Code</span>
+                        </div>
+                    </div>
+                    
+                    <div class="project-card">
+                        <h3 style="font-weight: bold; margin-bottom: 4px;">� Real-Time Analytics Dashboard</h3>
+                        <p style="margin-bottom: 6px;">
+                            Full-stack analytics platform with real-time data visualization, user management, 
+                            and reporting features. Includes REST API, WebSocket connections, and responsive design.
+                        </p>
+                        <div style="font-size: 10px; color: #666;">
+                            <strong>Tech Stack:</strong> Vue.js, Python + FastAPI, PostgreSQL, Redis, Chart.js, WebSockets
+                        </div>
+                        <div style="margin-top: 4px;">
+                            <span class="button-95" style="font-size: 9px; padding: 2px 6px;">Live Demo</span>
+                            <span class="button-95" style="font-size: 9px; padding: 2px 6px;">Source Code</span>
+                        </div>
+                    </div>
+                    
+                    <div class="project-card">
+                        <h3 style="font-weight: bold; margin-bottom: 4px;">🎯 Task Management System</h3>
+                        <p style="margin-bottom: 6px;">
+                            Comprehensive project management application with team collaboration, 
+                            drag-and-drop functionality, file uploads, and real-time notifications.
+                        </p>
+                        <div style="font-size: 10px; color: #666;">
+                            <strong>Tech Stack:</strong> React + Redux, Node.js + Express, MongoDB, Socket.io, AWS S3
+                        </div>
+                        <div style="margin-top: 4px;">
+                            <span class="button-95" style="font-size: 9px; padding: 2px 6px;">Live Demo</span>
+                            <span class="button-95" style="font-size: 9px; padding: 2px 6px;">Source Code</span>
+                        </div>
+                    </div>
+                    
+                    <div class="project-card">
+                        <h3 style="font-weight: bold; margin-bottom: 4px;">� Healthcare Management System</h3>
+                        <p style="margin-bottom: 6px;">
+                            Full-stack healthcare platform with patient records, appointment scheduling, 
+                            doctor dashboards, and secure messaging. HIPAA-compliant architecture.
+                        </p>
+                        <div style="font-size: 10px; color: #666;">
+                            <strong>Tech Stack:</strong> Angular, Node.js + Express, PostgreSQL, Docker, AWS EC2
+                        </div>
+                        <div style="margin-top: 4px;">
+                            <span class="button-95" style="font-size: 9px; padding: 2px 6px;">Case Study</span>
+                            <span class="button-95" style="font-size: 9px; padding: 2px 6px;">Architecture</span>
+                        </div>
+                    </div>
+                    
+                    <div style="background: #ffffcc; padding: 8px; border: 1px solid #808080; margin: 12px 0;">
+                        <strong>🚀 More Projects:</strong><br>
+                        Check out my <span class="highlight">GitHub</span> profile for more full-stack projects, 
+                        including microservices architectures, API integrations, and experimental technologies!
+                    </div>
+                </div>
+                
+                <!-- Contact Tab -->
+                <div id="contact" class="tab-content hidden fade-in">
+                    <h2 style="font-size: 16px; font-weight: bold; margin-bottom: 12px;">Connect with TamVo02</h2>
+                    
+                    <div style="background: #f0f0f0; padding: 12px; border: 1px solid #808080; margin: 8px 0;">
+                        <p style="margin-bottom: 8px;">
+                            I'm always excited to connect with fellow developers, tech enthusiasts, 
+                            potential collaborators, and anyone interested in full-stack development 
+                            or innovative web solutions.
+                        </p>
+                        
+                        <p>
+                            Let's discuss project opportunities, technical challenges, or just 
+                            share experiences about the latest in web development!
+                        </p>
+                    </div>
+                    
+                    <div style="margin: 12px 0;">
+                        <strong>📧 Email:</strong><br>
+                        <a href="mailto:tamvo02.dev@gmail.com" style="color: #0000ff; text-decoration: underline;">
+                            tamvo02.dev@gmail.com
+                        </a>
+                    </div>
+                    
+                    <div style="margin: 12px 0;">
+                        <strong>🔗 Professional Links:</strong><br>
+                        <div style="margin: 4px 0;">
+                            <span class="button-95" onclick="window.open('https://github.com/TamVo02', '_blank')">
+                                💻 GitHub - TamVo02
+                            </span>
+                        </div>
+                        <div style="margin: 4px 0;">
+                            <span class="button-95" onclick="window.open('https://linkedin.com/in/tamvo02', '_blank')">
+                                💼 LinkedIn Profile
+                            </span>
+                        </div>
+                        <div style="margin: 4px 0;">
+                            <span class="button-95" onclick="window.open('https://twitter.com/tamvo02dev', '_blank')">
+                                🐦 Twitter / X
+                            </span>
+                        </div>
+                    </div>
+                    
+                    <div style="background: #e0e0e0; padding: 8px; border: 1px solid #808080; margin: 12px 0;">
+                        <strong>📍 Location:</strong> Available for remote work & collaboration<br>
+                        <strong>🕐 Response Time:</strong> Usually within 24 hours<br>
+                        <strong>💬 Preferred Contact:</strong> Email or LinkedIn<br>
+                        <strong>🤝 Open to:</strong> Full-stack projects, technical consulting, code reviews
+                    </div>
+                </div>
+                
+                <!-- Resume Tab -->
+                <div id="resume" class="tab-content hidden fade-in">
+                    <h2 style="font-size: 16px; font-weight: bold; margin-bottom: 12px;">Professional Resume</h2>
+                    
+                    <div style="background: #ffffcc; padding: 8px; border: 1px solid #808080; margin: 8px 0;">
+                        <strong>📄 Resume Download:</strong><br>
+                        Click the button below to download my latest resume in PDF format.
+                    </div>
+                    
+                    <div style="margin: 12px 0;">
+                        <span class="button-95" onclick="downloadResume()">
+                            💾 Download Resume (PDF)
+                        </span>
+                    </div>
+                    
+                    <div style="background: #f0f0f0; padding: 12px; border: 1px solid #808080; margin: 12px 0;">
+                        <strong>📋 Quick Summary:</strong><br><br>
+                        
+                        <strong>🎯 Professional Summary:</strong><br>
+                        Full-Stack Developer with 3+ years of experience building web applications 
+                        and scalable solutions. Passionate about clean code, user experience, 
+                        and innovative technology solutions.<br><br>
+                        
+                        <strong>💼 Key Experience:</strong><br>
+                        • Frontend Development (React, Vue.js, HTML5, CSS3)<br>
+                        • Backend Development (Node.js, Python, PHP)<br>
+                        • Database Design & Management<br>
+                        • API Development & Integration<br>
+                        • DevOps & Cloud Deployment<br><br>
+                        
+                        <strong>🎓 Education:</strong><br>
+                        • Bachelor's in Computer Science<br>
+                        • Continuous professional development<br>
+                        • Industry certifications
+                    </div>
+                    
+                    <div style="background: #e0e0e0; padding: 8px; border: 1px solid #808080; margin: 12px 0;">
+                        <strong>🤝 References:</strong><br>
+                        Professional references available upon request.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Taskbar -->
+    <div class="taskbar">
+        <div class="start-button" onclick="toggleStartMenu()">
+            <div style="width: 12px; height: 12px; background: #ff0000; border-radius: 2px; display: flex; align-items: center; justify-content: center; color: white; font-size: 8px; font-weight: bold;">⊞</div>
+            Start
+        </div>
+        <div class="flex-1 flex">
+            <div class="button-95" style="margin-left: 8px; background: #dfdfdf;">
+                🖥️ My Portfolio
+            </div>
+        </div>
+        <div class="clock" id="clock">
+            <span id="time">10:21 AM</span>
+        </div>
+    </div>
+    
+    <script>
+        // Tab switching functionality
+        function showTab(tabName) {
+            // Hide all tabs
+            const tabs = document.querySelectorAll('.tab-content');
+            tabs.forEach(tab => {
+                tab.classList.add('hidden');
+                tab.classList.remove('fade-in');
+            });
+            
+            // Show selected tab
+            const selectedTab = document.getElementById(tabName);
+            if (selectedTab) {
+                selectedTab.classList.remove('hidden');
+                selectedTab.classList.add('fade-in');
+            }
+            
+            // Update sidebar button states
+            const buttons = document.querySelectorAll('.sidebar .button-95');
+            buttons.forEach(button => {
+                button.classList.remove('tab-active');
+            });
+        }
+        
+        // Clock functionality
+        function updateClock() {
+            const now = new Date();
+            const timeString = now.toLocaleTimeString([], {
+                hour: '2-digit',
+                minute: '2-digit',
+                hour12: true
+            });
+            document.getElementById('time').textContent = timeString;
+        }
+        
+        // Start menu toggle (placeholder)
+        function toggleStartMenu() {
+            alert('Start menu functionality coming soon! 🚀');
+        }
+        
+        // Resume download (placeholder)
+        function downloadResume() {
+            alert('Resume download functionality would be implemented here! 📄');
+        }
+        
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            updateClock();
+            setInterval(updateClock, 60000); // Update every minute
+            
+            // Initialize skill bars animation
+            setTimeout(() => {
+                const skillBars = document.querySelectorAll('.skill-progress');
+                skillBars.forEach(bar => {
+                    const width = bar.style.width;
+                    bar.style.width = '0%';
+                    setTimeout(() => {
+                        bar.style.width = width;
+                    }, 500);
+                });
+            }, 1000);
+        });
+        
+        // Add some interactive easter eggs
+        let clickCount = 0;
+        document.addEventListener('click', function() {
+            clickCount++;
+            if (clickCount === 10) {
+                alert('🎉 You found an easter egg! Thanks for exploring my portfolio!');
+                clickCount = 0;
+            }
+        });
+    </script>
+</body>
+</html>
